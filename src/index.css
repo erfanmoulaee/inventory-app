@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background-app-rgb: 255, 255, 255;
+    --background-app-rgb: #334155;
     --color-primary-900: 74, 109, 255;
     --color-primary-800: 92, 124, 255;
     --color-primary-700: 110, 138, 255;
@@ -58,7 +58,7 @@
 
 @layer components {
   .textField__input {
-    @apply w-full py-3 px-4 rounded-xl text-secondary-900 border border-secondary-100 bg-secondary-100 hover:border-primary-500 focus:border-primary-500 focus:bg-secondary-0 transition-all duration-300 ease-out focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-secondary-200;
+    @apply w-full py-3 px-4 rounded-xl text-secondary-800 border border-secondary-300 bg-secondary-600  focus:border-blue-500 focus:bg-secondary-600 transition-all duration-300 ease-out dark:focus:shadow-secondary-200;
   }
   .btn {
     @apply px-3 py-1 font-bold rounded-xl transition-all duration-300;
@@ -99,7 +99,7 @@ body {
   font-family: "Vazir";
   min-height: 100vh;
   user-select: none;
-  background-color: rgb(var(--background-app-rgb));
+  background-color: #334155;
 }
 
 * {
