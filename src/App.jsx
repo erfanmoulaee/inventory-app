@@ -14,11 +14,32 @@ function App() {
   const [sortProducts, setSortProduct] = useState("latest");
 
   useEffect(() => {
+    const storedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+    const storedProductsList = JSON.parse(localStorage.getItem("productsList")) || [];
+
+    setCategories(storedCategories);
+
+    setProductList(storedProductsList);
+  }, []);
+
+  useEffect(() => {
     let result = productsList;
     result = filterSearch(result);
     result = filterSort(result);
     setFilterOnProduct(result);
   }, [productsList, searchProducts, sortProducts]);
+
+  useEffect(() => {
+    if (categories.length) {
+      localStorage.setItem("categories", JSON.stringify(categories));
+    }
+  }, [categories]);
+
+  useEffect(() => {
+    if (productsList.length) {
+      localStorage.setItem("productsList", JSON.stringify(productsList));
+    }
+  }, [productsList]);
 
   const sortHandler = (e) => {
     setSortProduct(e.target.value);
@@ -30,7 +51,7 @@ function App() {
 
   const filterSort = (arr) => {
     return [...arr].sort((a, b) => {
-      if (sortProducts === latest) {
+      if (sortProducts === "latest") {
         return new Date(a.createdAt) - new Date(b.createdAt);
       } else if (sortProducts === "earliest") {
         return new Date(b.createdAt) - new Date(a.createdAt);
