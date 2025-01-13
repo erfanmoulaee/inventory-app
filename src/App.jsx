@@ -8,6 +8,11 @@ import AddNewProduct from "./components/Products/AddNewProduct";
 
 function App() {
   const [category, setCategory] = useState([]);
+  const [product, setProduct] = useState([]);
+
+  const handleAddProduct = (newProduct) => {
+    setProduct((prevProduct) => [...prevProduct, newProduct]);
+  };
 
   const handleAddCategory = (newCategory) => {
     setCategory((prevCategory) => [...prevCategory, newCategory]);
@@ -18,7 +23,7 @@ function App() {
       <div className="grid grid-cols-12 row-span-2 gap-4 container h-screen mt-6">
         <div className="col-span-12 md:col-span-6 space-y-8">
           <AddNewCategory onAddNewCategory={handleAddCategory} />
-          <AddNewProduct />
+          <AddNewProduct category={category} onAddNewProduct={handleAddProduct} />
         </div>
         <div className="col-span-12 md:col-span-6 space-y-8">
           <Filter />

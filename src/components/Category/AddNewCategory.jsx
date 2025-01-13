@@ -13,6 +13,7 @@ function AddNewCategory({ onAddNewCategory }) {
       title,
       description,
       createdAt: new Date().toISOString(),
+      id: Date.now(),
     };
     onAddNewCategory(newCategory);
     setTitle("");
