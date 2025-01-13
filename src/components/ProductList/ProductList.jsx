@@ -13,7 +13,7 @@ function ProductList({ productsList, categories, setProductList }) {
       <h3 className="text-secondary-400 border-b-[1px] border-secondary-400 mb-6">ProductList</h3>
       {productsList.map((item) => {
         return (
-          <div key={item.id} className="flex items-center justify-between p-2">
+          <div key={item.id} className="flex items-center justify-between p-2 overflow-x-auto">
             <div>
               <span className="text-secondary-400">{item.title}</span>
             </div>

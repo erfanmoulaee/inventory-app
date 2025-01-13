@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import TextField from "../../ui/TextField";
-import SelectField from "../../ui/SelectField";
 
 function AddNewProduct({ categories, onAddNewProduct }) {
   const [title, setTitle] = useState("");
@@ -28,7 +27,6 @@ function AddNewProduct({ categories, onAddNewProduct }) {
       <form className="p-4 bg-secondary-500 rounded-lg space-y-2" onSubmit={handleSubmit}>
         <TextField name="title" label="title" value={title} onChange={(e) => setTitle(e.target.value)} />
         <TextField name="quantity" label="quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-        {/* <SelectField name="category" label="category" options={categories} value={category} setCategory={setCategory} onChange={(e) => setCategory(e.target.value)} /> */}
         <div>
           <label htmlFor="category" className="mb-2 block text-secondary-400">
             category

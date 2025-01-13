@@ -1,4 +1,4 @@
-function Filter({ categories, searchProducts, sortProducts, onSort, onSearch }) {
+function Filter({ categories, searchProducts, sortProducts, onSort, onSearch, selectedCategorySort, onSelectCategory }) {
   return (
     <div>
       <h3 className="text-secondary-400 border-b-[1px] border-secondary-400 mb-6">Filter</h3>
@@ -21,10 +21,8 @@ function Filter({ categories, searchProducts, sortProducts, onSort, onSearch }) 
         <label htmlFor="sort" className="text-secondary-400 text-lg">
           sort
         </label>
-        <select name="" id="" className="textField__input w-1/6 py-2">
-          <option value="" disabled>
-            ALL
-          </option>
+        <select name="categorySort" id="categorySort" value={selectedCategorySort} onChange={onSelectCategory} className="textField__input w-1/6 py-2">
+          <option value="ALL">ALL</option>
           {categories.map((item) => {
             return (
               <option key={item.id} value={item.id}>

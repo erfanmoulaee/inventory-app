@@ -12,6 +12,7 @@ function App() {
   const [filteredOnProduct, setFilterOnProduct] = useState([]);
   const [searchProducts, setSearchProduct] = useState("");
   const [sortProducts, setSortProduct] = useState("latest");
+  const [selectedCategorySort, setSelectedCategorySort] = useState("");
 
   useEffect(() => {
     const storedCategories = JSON.parse(localStorage.getItem("categories")) || [];
@@ -25,9 +26,10 @@ function App() {
   useEffect(() => {
     let result = productsList;
     result = filterSearch(result);
+    result = filterCategory(result);
     result = filterSort(result);
     setFilterOnProduct(result);
-  }, [productsList, searchProducts, sortProducts]);
+  }, [productsList, searchProducts, sortProducts, selectedCategorySort]);
 
   useEffect(() => {
     if (categories.length) {
@@ -49,6 +51,10 @@ function App() {
     setSearchProduct(e.target.value.trim().toLowerCase());
   };
 
+  const categorySelectHandler = (e) => {
+    setSelectedCategorySort(e.target.value);
+  };
+
   const filterSort = (arr) => {
     return [...arr].sort((a, b) => {
       if (sortProducts === "latest") {
@@ -63,6 +69,11 @@ function App() {
     return arr.filter((item) => item.title.toLowerCase().includes(searchProducts));
   };
 
+  const filterCategory = (arr) => {
+    if (!selectedCategorySort || selectedCategorySort === "ALL") return arr;
+    return arr.filter((item) => item.categoryId === selectedCategorySort);
+  };
+
   const handleAddProduct = (newProduct) => {
     setProductList((prevProduct) => [...prevProduct, newProduct]);
   };
@@ -72,14 +83,22 @@ function App() {
   };
   return (
     <div>
-      <Header />
+      <Header productsList={productsList} />
       <div className="grid grid-cols-12 row-span-2 gap-4 container h-screen mt-6">
         <div className="col-span-12 md:col-span-6 space-y-8">
           <AddNewCategory onAddNewCategory={handleAddCategory} />
           <AddNewProduct categories={categories} onAddNewProduct={handleAddProduct} />
         </div>
         <div className="col-span-12 md:col-span-6 space-y-8">
-          <Filter categories={categories} searchProducts={searchProducts} sortProducts={sortProducts} onSort={sortHandler} onSearch={searchHandler} />
+          <Filter
+            categories={categories}
+            searchProducts={searchProducts}
+            sortProducts={sortProducts}
+            onSort={sortHandler}
+            onSearch={searchHandler}
+            selectedCategorySort={selectedCategorySort}
+            onSelectCategory={categorySelectHandler}
+          />
           <ProductList productsList={filteredOnProduct} categories={categories} setProductList={setProductList} />
         </div>
       </div>
