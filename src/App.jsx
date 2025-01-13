@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import AddNewCategory from "./components/Category/AddNewCategory";
 import Filter from "./components/Filter/Filter";
@@ -9,6 +9,38 @@ import AddNewProduct from "./components/Products/AddNewProduct";
 function App() {
   const [categories, setCategories] = useState([]);
   const [productsList, setProductList] = useState([]);
+  const [filteredOnProduct, setFilterOnProduct] = useState([]);
+  const [searchProducts, setSearchProduct] = useState("");
+  const [sortProducts, setSortProduct] = useState("latest");
+
+  useEffect(() => {
+    let result = productsList;
+    result = filterSearch(result);
+    result = filterSort(result);
+    setFilterOnProduct(result);
+  }, [productsList, searchProducts, sortProducts]);
+
+  const sortHandler = (e) => {
+    setSortProduct(e.target.value);
+  };
+
+  const searchHandler = (e) => {
+    setSearchProduct(e.target.value.trim().toLowerCase());
+  };
+
+  const filterSort = (arr) => {
+    return [...arr].sort((a, b) => {
+      if (sortProducts === latest) {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      } else if (sortProducts === "earliest") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      }
+    });
+  };
+
+  const filterSearch = (arr) => {
+    return arr.filter((item) => item.title.toLowerCase().includes(searchProducts));
+  };
 
   const handleAddProduct = (newProduct) => {
     setProductList((prevProduct) => [...prevProduct, newProduct]);
@@ -26,8 +58,8 @@ function App() {
           <AddNewProduct categories={categories} onAddNewProduct={handleAddProduct} />
         </div>
         <div className="col-span-12 md:col-span-6 space-y-8">
-          <Filter />
-          <ProductList productsList={productsList} />
+          <Filter categories={categories} searchProducts={searchProducts} sortProducts={sortProducts} onSort={sortHandler} onSearch={searchHandler} />
+          <ProductList productsList={filteredOnProduct} categories={categories} setProductList={setProductList} />
         </div>
       </div>
     </div>
